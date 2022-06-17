@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PullService } from './service/pull.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-pull-api-example';
+  data: any;
+
+  constructor(private service: PullService) {
+  }
+
+  ngOnInit() {
+    this.service.getData()
+      .subscribe(response => {
+        this.data = response;
+      })
+  }
 }
