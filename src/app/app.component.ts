@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { PullService } from './service/pull.service';
 
 @Component({
@@ -9,14 +10,19 @@ import { PullService } from './service/pull.service';
 export class AppComponent {
   title = 'angular-pull-api-example';
   data: any;
+  subscription: Subscription = Subscription.EMPTY;
 
   constructor(private service: PullService) {
   }
 
   ngOnInit() {
-    this.service.getData()
+    this.subscription = this.service.getData()
       .subscribe(response => {
         this.data = response;
       })
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
